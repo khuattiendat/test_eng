@@ -1,0 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const examController = require('../controllers/examController');
+const validate = require("../middlewares/validate");
+const authMiddleware = require("../middlewares/authMiddleware");
+const ExamCreateRequest = require("../validators/ExamCreateRequest");
+const roleMiddleware = require("../middlewares/roleMiddleware");
+router.post("/create", authMiddleware, validate(ExamCreateRequest), examController.create);
+router.get("/get-all", authMiddleware, examController.getAll);
+router.get("/get-by-id/:id", authMiddleware, examController.getById);
+router.put("/update/:id", validate(ExamCreateRequest), examController.update);
+router.delete("/delete/:id", authMiddleware, roleMiddleware(['admin']), examController.delete);
+module.exports = router;
