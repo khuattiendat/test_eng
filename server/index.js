@@ -22,7 +22,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/exams', examRouter);
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('new Hello World');
 })
 // connect to MongoDB
 connectDB().then(() => {
