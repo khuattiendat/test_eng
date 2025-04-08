@@ -41,6 +41,7 @@ class ExamService {
         }
         return await examRepository.update(id, data);
     }
+
     async delete(id) {
         if (!id) {
             throw new Error('Exam ID is required');

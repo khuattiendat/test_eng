@@ -8,7 +8,6 @@ const userLoginRequest = require("../validators/UserLoginRequest");
 const authMiddleware = require("../middlewares/authMiddleware");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 //
-router.get("/", authMiddleware, UserController.getAllUsers);
 router.post("/refresh-token", authMiddleware, AuthController.refreshToken);
 router.post("/logout", authMiddleware, AuthController.logout);
 router.post("/register", validate(userRegisterRequest), AuthController.register);

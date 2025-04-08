@@ -1,5 +1,6 @@
 const {responsiveApiError, responsiveApiSuccess} = require("../utils/responsiveApi");
 const examService = require("../services/ExamService");
+const {ObjectId} = require("mongodb");
 
 class ExamController {
     async create(req, res) {
@@ -31,6 +32,9 @@ class ExamController {
     async getById(req, res) {
         try {
             const {id} = req.params;
+            if (!id || !ObjectId.isValid(id)) {
+                return res.status(400).json({message: 'Invalid or missing id'});
+            }
             const exam = await examService.getById(id);
             return res.status(200).json(responsiveApiSuccess('Lấy thông tin bài thi thành công', exam));
         } catch (error) {
@@ -50,6 +54,9 @@ class ExamController {
     async delete(req, res) {
         try {
             const {id} = req.params;
+            if (!id || !ObjectId.isValid(id)) {
+                return res.status(400).json({message: 'Invalid or missing id'});
+            }
             await examService.delete(id);
             return res.status(200).json(responsiveApiSuccess('Xóa bài thi thành công'));
         } catch (error) {

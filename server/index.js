@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./src/routes/authRouter');
 const userRouter = require('./src/routes/userRouter');
 const examRouter = require('./src/routes/examRouter');
+const questionRouter = require('./src/routes/questionRouter');
 const bodyParser = require('body-parser');
 const connectDB = require('./src/configs/connectDB');
 const PORT = process.env.PORT || 8080;
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/exams', examRouter);
+app.use('/api/questions', questionRouter);
 app.get('/', (req, res) => {
     res.send('new Hello World');
 })

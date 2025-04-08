@@ -30,12 +30,6 @@ const questionSchema = new mongoose.Schema({
                 },
             }
         ],
-        validate: {
-            validator: function (v) {
-                return v.length > 0;
-            },
-            message: 'At least one option is required',
-        },
     }
 }, {timestamps: true});
 const Question = mongoose.model('Question', questionSchema);

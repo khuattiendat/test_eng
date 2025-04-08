@@ -1,14 +1,24 @@
 const UserRepository = require("../repositories/UserRepository");
 const dotenv = require("dotenv");
 const {responsiveApiSuccess} = require("../utils/responsiveApi");
+const examRepository = require("../repositories/ExamRepository");
 dotenv.config();
 const PAGE_SIZE = process.env.PAGE_SIZE || 10;
 
 class UserService {
 
     async getAllUsers(page = 1) {
+        const limit = PAGE_SIZE;
         const skip = (page - 1) * PAGE_SIZE;
-        return await UserRepository.findAllWithPagination(PAGE_SIZE, skip);
+        const totalUsers = await UserRepository.count();
+        const totalPages = Math.ceil(totalUsers / PAGE_SIZE);
+        const users = await UserRepository.findAllWithPagination(limit, skip);
+        return {
+            users,
+            totalPages,
+            currentPage: page,
+            totalUsers
+        };
     }
 
     async countUsers() {

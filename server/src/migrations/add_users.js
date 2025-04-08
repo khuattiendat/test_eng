@@ -20,7 +20,9 @@ connectDB().then(() => {
                 {
                     name: "admin", email: "khuattiendat2002@gmail.com",
                     password: bcrypt.hashSync("123456", 10),
-                    phone: "0383878902", role: "admin"
+                    phone: "0383878902", role: "admin",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
                 },
             ]);
             console.log("Migration completed successfully.");

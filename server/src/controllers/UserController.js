@@ -1,19 +1,19 @@
 const UserService = require("../services/UserServices");
 const {responsiveApiSuccess} = require("../utils/responsiveApi");
+const {ObjectId} = require("mongodb");
 
 class UserController {
 
     async getAllUsers(req, res) {
         try {
             const page = parseInt(req.query.page) || 1;
-            const users = await UserService.getAllUsers(page);
-            const totalUsers = await UserService.countUsers();
-            const totalPages = Math.ceil(totalUsers / 2); // Assuming 2 users per page
+            const data = await UserService.getAllUsers(page);
+            const {users, totalUsers, totalPages, currentPage} = data;
             res.status(200).json(responsiveApiSuccess('Lấy danh sách người dùng thành công', {
                 users,
                 totalUsers,
                 totalPages,
-                currentPage: page
+                currentPage
             }));
         } catch (error) {
             res.status(500).json(responsiveApiSuccess(error?.message || 'Lỗi hệ thống'));
@@ -23,6 +23,9 @@ class UserController {
     async getUserById(req, res) {
         try {
             const id = req.params.id;
+            if (!id || !ObjectId.isValid(id)) {
+                return res.status(400).json({message: 'Invalid or missing id'});
+            }
             const user = await UserService.getUserById(id);
             if (!user) {
                 return res.status(404).json(responsiveApiSuccess('Người dùng không tồn tại'));

@@ -14,6 +14,7 @@ class UserRepository {
     async findAllWithPagination(limit, skip) {
         return User.find()
             .select("-password -refreshToken")
+            .sort({createdAt: -1})
             .limit(limit).skip(skip);
     }
 
